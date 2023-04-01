@@ -8,6 +8,11 @@ import { api } from "~/utils/api";
 const Home: NextPage = () => {
   const hello = api.example.hello.useQuery({ text: "from tRPC" });
 
+  const exampleTableContent = api.example.getWithValidation.useQuery({
+    text: "aaaaa",
+  });
+  console.log(exampleTableContent);
+
   return (
     <>
       <Head>
@@ -49,6 +54,12 @@ const Home: NextPage = () => {
               {hello.data ? hello.data.greeting : "Loading tRPC query..."}
             </p>
             <AuthShowcase />
+            <button
+              className="rounded-full bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20"
+              // onClick={getExampleTableContent}
+            >
+              getData
+            </button>
           </div>
         </div>
       </main>
@@ -63,7 +74,7 @@ const AuthShowcase: React.FC = () => {
 
   const { data: secretMessage } = api.example.getSecretMessage.useQuery(
     undefined, // no input
-    { enabled: sessionData?.user !== undefined },
+    { enabled: sessionData?.user !== undefined }
   );
 
   return (
