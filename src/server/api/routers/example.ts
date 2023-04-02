@@ -20,7 +20,11 @@ export const exampleRouter = createTRPCRouter({
   }),
 
   getWithValidation: publicProcedure
-    .input(z.object({ text: z.string().min(3, { message: "3文字以上入力してください" }) }))
+    .input(
+      z.object({
+        text: z.string().min(3, { message: "3文字以上入力してください" }),
+      })
+    )
     .query(({ ctx }) => {
       return ctx.prisma.example.findMany();
     }),
